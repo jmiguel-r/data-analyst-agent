@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  setup:
+    build: .
+    volumes:
+      - .:/app
+    env_file: .env
+    command: >
+      sh -c "python data/generate_data.py && python vectorstore/ingest.py"
+    profiles: [setup]
+
+  agent:
+    build: .
+    volumes:
+      - .:/app
+    env_file: .env
+    stdin_open: true
+    tty: true
+    command: python main.py
+    depends_on: []
