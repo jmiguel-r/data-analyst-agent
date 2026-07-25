@@ -48,6 +48,31 @@ ChromaDB   Pandas +      Sandboxed
 - **Data:** Pandas, Matplotlib, Seaborn
 - **Containerization:** Docker + docker-compose
 
+## Observability with LangSmith
+
+Every LangGraph run is automatically traced to [LangSmith](https://smith.langchain.com) when the following env vars are set:
+
+```bash
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=ls__...
+LANGCHAIN_PROJECT=data-analyst-agent
+```
+
+Each trace captures the full execution tree:
+
+```
+LangGraph
+  └── supervisor      → intent classification (Gemini)
+       └── router     → routes to the correct agent
+  └── rag_agent / analyst_agent / code_agent
+       └── ChatGoogleGenerativeAI (gemini-2.5-flash)
+  └── consolidate     → formats final answer
+```
+
+LangSmith records latency, token usage, cost per run, and input/output at every node — making it easy to spot slow agents, prompt regressions, or routing errors.
+
+No code changes are needed to enable tracing — LangChain instruments LangGraph automatically.
+
 ## Project Structure
 
 ```
