@@ -42,7 +42,8 @@ ChromaDB   Pandas +      Sandboxed
 ## Tech Stack
 
 - **Orchestration:** LangGraph 0.2 (StateGraph)
-- **LLM:** Claude 3.5 Haiku via `langchain-anthropic`
+- **LLM:** Gemini 2.5 Flash via `langchain-google-genai`
+- **Observability:** LangSmith — full trace of every LangGraph run (supervisor → agent → consolidate)
 - **Vector Store:** ChromaDB with `all-MiniLM-L6-v2` embeddings
 - **Data:** Pandas, Matplotlib, Seaborn
 - **Containerization:** Docker + docker-compose
@@ -86,7 +87,8 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Add your ANTHROPIC_API_KEY to .env
+# Add your GOOGLE_API_KEY and optionally LANGCHAIN_API_KEY to .env
+# See .env.example for full list of variables
 ```
 
 ### 3. Generate data and index
