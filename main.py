@@ -1,18 +1,42 @@
 """
 main.py
 Interactive CLI for the Data Analyst Agent.
+
+LangSmith tracing is enabled automatically when these env vars are set:
+  LANGCHAIN_TRACING_V2=true
+  LANGCHAIN_API_KEY=ls__...
+  LANGCHAIN_PROJECT=data-analyst-agent   (optional, defaults to project name)
+
+Copy .env.example to .env and fill in your keys to get started.
 """
 import os
 from dotenv import load_dotenv
-from graph.workflow import graph
 
 load_dotenv()
 
-BANNER = """
+# ── LangSmith tracing ────────────────────────────────────────────────────────
+# LangChain/LangGraph instruments all runs automatically when these are set.
+# No additional code changes needed — tracing is transparent.
+os.environ.setdefault("LANGCHAIN_PROJECT", "data-analyst-agent")
+
+_tracing_enabled = os.getenv("LANGCHAIN_TRACING_V2", "").lower() == "true"
+_langsmith_key   = os.getenv("LANGCHAIN_API_KEY", "")
+
+from graph.workflow import graph
+
+_langsmith_status = (
+    f"🔭 LangSmith tracing ON  → project: {os.getenv('LANGCHAIN_PROJECT', 'data-analyst-agent')}"
+    if _tracing_enabled and _langsmith_key
+    else "⚪ LangSmith tracing OFF (set LANGCHAIN_TRACING_V2=true + LANGCHAIN_API_KEY)"
+)
+
+BANNER = f"""
 ╔══════════════════════════════════════════════════════╗
 ║          Data Analyst Agent  —  LangGraph            ║
 ║   Agents: RAG · Statistical Analyst · Code REPL      ║
 ╚══════════════════════════════════════════════════════╝
+{_langsmith_status}
+
 Type your question about the sales dataset.
 Commands: 'help' for examples  |  'exit' to quit
 """
@@ -33,8 +57,8 @@ Example queries:
 
 def main():
     print(BANNER)
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        print("⚠️  ANTHROPIC_API_KEY not found. Copy .env.example to .env and add your key.\n")
+    if not os.getenv("GOOGLE_API_KEY"):
+        print("⚠️  GOOGLE_API_KEY not found. Copy .env.example to .env and add your key.\n")
         return
 
     while True:

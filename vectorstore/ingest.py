@@ -13,11 +13,11 @@ DATA_PATH       = Path(__file__).parent.parent / "data" / "sales.csv"
 CHROMA_PATH     = Path(__file__).parent.parent / "vectorstore" / "chroma_db"
 
 def row_to_text(row) -> str:
+    discount = "no discount" if row['discount'] == 0 else f"{int(row['discount']*100)}% discount"
     return (
         f"On {row['date']}, vendor {row['vendor']} sold {row['quantity']} unit(s) of "
         f"{row['product']} ({row['category']}) via {row['channel']} channel in the "
-        f"{row['region']} region at ${row['unit_price']} each "
-        f"({'no discount' if row['discount'] == 0 else f\"{int(row['discount']*100)}% discount\"}). "
+        f"{row['region']} region at ${row['unit_price']} each ({discount}). "
         f"Total revenue: ${row['revenue']}."
     )
 

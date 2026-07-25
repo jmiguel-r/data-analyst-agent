@@ -4,7 +4,7 @@ Retrieves relevant sales context from ChromaDB and answers with Claude.
 """
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pathlib import Path
 from graph.state import AgentState
@@ -13,7 +13,7 @@ CHROMA_PATH     = Path(__file__).parent.parent / "vectorstore" / "chroma_db"
 COLLECTION_NAME = "sales_knowledge"
 TOP_K           = 8
 
-_llm = ChatAnthropic(model="claude-3-5-haiku-20241022", temperature=0.2)
+_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.2)
 _ef  = SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
 
 

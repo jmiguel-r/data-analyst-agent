@@ -3,11 +3,11 @@ agents/supervisor.py
 Classifies user intent and routes to the correct agent node.
 Routes: rag_agent | analyst_agent | code_agent
 """
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from graph.state import AgentState
 
-_llm = ChatAnthropic(model="claude-3-5-haiku-20241022", temperature=0)
+_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 
 SYSTEM_PROMPT = """You are a routing supervisor for a data analysis system.
 Given a user query about sales data, classify it into exactly ONE of these categories:

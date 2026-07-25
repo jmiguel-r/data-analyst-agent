@@ -6,13 +6,13 @@ in a sandboxed environment (restricted builtins, no file system writes).
 import pandas as pd
 import io
 import traceback
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pathlib import Path
 from graph.state import AgentState
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "sales.csv"
-_llm      = ChatAnthropic(model="claude-3-5-haiku-20241022", temperature=0.1)
+_llm      = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
 
 CODEGEN_PROMPT = """You are a Python data analyst. A pandas DataFrame called `df` is already loaded with these columns:
 date (datetime), category, product, vendor, region, channel, quantity (int),

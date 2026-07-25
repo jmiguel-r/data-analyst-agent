@@ -8,7 +8,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pathlib import Path
 from datetime import datetime
@@ -18,7 +18,7 @@ DATA_PATH   = Path(__file__).parent.parent / "data" / "sales.csv"
 OUTPUT_DIR  = Path(__file__).parent.parent / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-_llm = ChatAnthropic(model="claude-3-5-haiku-20241022", temperature=0.1)
+_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
 
 ANALYSIS_PROMPT = """You are a senior data analyst. Given a sales DataFrame summary and a user question,
 produce a clear, structured analysis. Include:
